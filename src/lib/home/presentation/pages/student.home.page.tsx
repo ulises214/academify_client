@@ -1,0 +1,7 @@
+import { FC } from 'react';
+
+import { User } from '../../../user/domain/user';
+
+export const StudentHomePage: FC<{ user: User }> = ({ user }) => {
+  return <>{user.displayName}</>;
+};
