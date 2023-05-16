@@ -63,7 +63,7 @@ export const ApiFetcher = <R extends keyof Repo, T extends keyof Repo[R]>({
     return onLoading ? (
       onLoading()
     ) : (
-      <div className='mx-auto'>
+      <div className='flex justify-center'>
         <Loader />
       </div>
     );
