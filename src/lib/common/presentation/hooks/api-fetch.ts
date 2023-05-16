@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useState } from 'react';
 
 import {
   StudentApiRepository,
   StudentRepository,
 } from '../../../student/data/student-repository';
+import {
+  TeacherApiRepository,
+  TeacherRepository,
+} from '../../../teacher/data/teacher.repository';
 import {
   UserApiRepository,
   UserRepository,
@@ -13,11 +18,13 @@ import { ApiResponse } from '../../infrastructure/fetch.wrapper';
 export type Repo = {
   user: UserRepository;
   student: StudentRepository;
+  teacher: TeacherRepository;
 };
 
 const repos: Repo = {
   user: UserApiRepository,
   student: StudentApiRepository,
+  teacher: TeacherApiRepository,
 };
 
 export type FetchData<

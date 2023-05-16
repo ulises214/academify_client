@@ -1,18 +1,15 @@
 import { CourseWithTeacher } from '../../common/domain/models/course';
 import {
-  ApiResponse,
   buildFetcher,
+  ParsedRepository,
 } from '../../common/infrastructure/fetch.wrapper';
 
-export type StudentRepository = {
-  getCourses(): ApiResponse<CourseWithTeacher[]>;
-};
+const fetch = buildFetcher({ baseUrl: 'students' });
 
-const fetch = buildFetcher({
-  baseUrl: 'students',
-  withApi: true,
-});
+export type StudentRepository = ParsedRepository<{
+  getCourses(): CourseWithTeacher[];
+}>;
 
 export const StudentApiRepository: StudentRepository = {
-  getCourses: () => fetch.get({ path: '/courses' }),
+  getCourses: () => fetch.get('courses'),
 };

@@ -14,17 +14,22 @@ export type ApiResult<T> =
 
 export type ApiResponse<T> = Promise<ApiResult<T>>;
 
+export type ParsedRepository<T> = {
+  [K in keyof T]: T[K] extends (...args: infer U) => infer R
+    ? (...args: U) => ApiResponse<R>
+    : never;
+};
+
 type Query = Record<string, string>;
 
 type CommonProps = {
-  path: string;
   headers?: Record<string, string>;
   query?: Query;
 };
 
 type GetProps = CommonProps;
 type PostProps = CommonProps & {
-  body: Record<string, unknown> | FormData;
+  body?: Record<string, unknown> | FormData;
 };
 
 export const buildFetcher = ({
@@ -34,10 +39,10 @@ export const buildFetcher = ({
   baseUrl: string;
   withApi?: boolean;
 }): {
-  get: <T>(props: GetProps) => ApiResponse<T>;
-  post: <T>(props: PostProps) => ApiResponse<T>;
-  put: <T>(props: PostProps) => ApiResponse<T>;
-  delete: <T>(props: GetProps) => ApiResponse<T>;
+  get: <T>(path: string, props?: GetProps) => ApiResponse<T>;
+  post: <T>(path: string, props?: PostProps) => ApiResponse<T>;
+  put: <T>(path: string, props?: PostProps) => ApiResponse<T>;
+  delete: <T>(path: string, props?: GetProps) => ApiResponse<T>;
 } => {
   const buildUrl = ({ path, query }: { path: string; query?: Query }) => {
     const includeSlash = path.startsWith('/');
@@ -63,12 +68,10 @@ export const buildFetcher = ({
     return JSON.stringify(error);
   };
 
-  const getDelete = async <T>({
-    path,
-    headers,
-    query,
-    method,
-  }: GetProps & { method: 'get' | 'delete' }): ApiResponse<T> => {
+  const getDelete = async <T>(
+    path: string,
+    { headers, query, method }: GetProps & { method: 'get' | 'delete' }
+  ): ApiResponse<T> => {
     const url = buildUrl({ path, query });
 
     try {
@@ -85,13 +88,10 @@ export const buildFetcher = ({
     }
   };
 
-  const postPut = async <T>({
-    path,
-    headers,
-    body,
-    method,
-    query,
-  }: PostProps & { method: 'post' | 'put' }): ApiResponse<T> => {
+  const postPut = async <T>(
+    path: string,
+    { headers, body, method, query }: PostProps & { method: 'post' | 'put' }
+  ): ApiResponse<T> => {
     const url = buildUrl({ path, query });
     try {
       const response = await axiosInstance[method]<ApiResult<T>>(url, body, {
@@ -108,9 +108,10 @@ export const buildFetcher = ({
   };
 
   return {
-    get: (props) => getDelete({ ...props, method: 'get' }),
-    post: (props) => postPut({ ...props, method: 'post' }),
-    put: (props) => postPut({ ...props, method: 'put' }),
-    delete: (props) => getDelete({ ...props, method: 'delete' }),
+    get: (path, props) => getDelete(path, { ...(props ?? {}), method: 'get' }),
+    post: (path, props) => postPut(path, { ...(props ?? {}), method: 'post' }),
+    put: (path, props) => postPut(path, { ...(props ?? {}), method: 'put' }),
+    delete: (path, props) =>
+      getDelete(path, { ...(props ?? {}), method: 'delete' }),
   } as const;
 };

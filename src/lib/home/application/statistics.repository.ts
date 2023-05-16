@@ -1,20 +1,18 @@
 import {
-  ApiResponse,
   buildFetcher,
+  ParsedRepository,
 } from '../../common/infrastructure/fetch.wrapper';
 
-export type StatisticsRepository = {
-  getCounts(): ApiResponse<{
+const fetch = buildFetcher({ baseUrl: 'statistics' });
+
+export type StatisticsRepository = ParsedRepository<{
+  getCounts(): {
     courses: number;
     students: number;
     teachers: number;
-  }>;
-};
-
-const fetch = buildFetcher({
-  baseUrl: 'statistics',
-});
+  };
+}>;
 
 export const StatisticsApiRepository: StatisticsRepository = {
-  getCounts: () => fetch.get({ path: 'counts' }),
+  getCounts: () => fetch.get('counts'),
 };
