@@ -1,4 +1,7 @@
-export type User = {
+import { BaseModel } from '../../common/domain/models/base-model';
+
+export type UserRole = 'ADMIN' | 'STUDENT' | 'TEACHER';
+export type LoginUser = {
   uCorreo: string;
   uNombre: string;
   uDependencia: string;
@@ -9,5 +12,11 @@ export type User = {
   displayName: string;
   ImmutableID: string;
   givenName: string;
-  role: 'ADMIN' | 'STUDENT' | 'TEACHER';
+  role: UserRole;
+};
+
+export type User = BaseModel & {
+  role: UserRole;
+  email: string;
+  name: string;
 };

@@ -2,10 +2,10 @@ import {
   ApiResponse,
   buildFetcher,
 } from '../../common/infrastructure/fetch.wrapper';
-import { User } from '../domain/user';
+import { LoginUser } from '../domain/user';
 
 export type UserRepository = {
-  getProfile(): ApiResponse<User>;
+  getProfile(): ApiResponse<LoginUser>;
 };
 
 const fetch = buildFetcher({

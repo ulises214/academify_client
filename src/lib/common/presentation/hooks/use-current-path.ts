@@ -2,10 +2,13 @@ import { matchRoutes, useLocation } from 'react-router-dom';
 
 export const Routes = {
   HOME: '/',
+  STUDENT_HOME: '/student',
   STUDENT_ACTIVITIES: '/student/activities',
   STUDENT_GRADES: '/student/grades',
+  TEACHER_HOME: '/teacher',
   TEACHER_ACTIVITIES: '/teacher/activities',
   TEACHER_GRADES: '/teacher/grades',
+  ADMIN_HOME: '/admin',
   ADMIN_USERS: '/admin/users',
   ADMIN_CLASES: '/admin/classes',
   USER_PROFILE: '/profile',

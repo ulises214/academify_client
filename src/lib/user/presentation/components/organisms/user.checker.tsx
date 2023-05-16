@@ -1,16 +1,17 @@
 import { FC } from 'react';
 
-import { User } from '../../../domain/user';
+import { Loader } from '../../../../common/presentation/components/atoms/loader';
+import { LoginUser } from '../../../domain/user';
 import { useUser } from '../../context/user.context';
 
 export const UserChecker: FC<{
-  children: (data: { user: User }) => JSX.Element;
+  children: (data: { user: LoginUser }) => JSX.Element;
   onError?: (error: string) => JSX.Element;
 }> = ({ children, onError }) => {
   const { data } = useUser();
 
   if (!data) {
-    return <div>Loading...</div>;
+    return <Loader className='mx-auto' />;
   }
 
   if (!data.status) {

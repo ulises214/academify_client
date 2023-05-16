@@ -4,22 +4,22 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { FC, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
-import { User } from '../../../user/domain/user';
+import { LoginUser } from '../../../user/domain/user';
 import { clsxm } from '../clsxm';
 import { useCurrentPath } from '../hooks/use-current-path';
 
 const studentNavigation = [
-  { name: 'Clases', href: '/' },
+  { name: 'Clases', href: '/student' },
   { name: 'Actividades', href: '/student/activities' },
   { name: 'Calificaciones', href: '/student/grades' },
 ];
 const teacherNavigation = [
-  { name: 'Clases', href: '/' },
+  { name: 'Clases', href: '/teacher' },
   { name: 'Actividades', href: '/teacher/activities' },
   { name: 'Calificaciones', href: '/teacher/grades' },
 ];
 const adminNavigation = [
-  { name: 'Estadísticas', href: '/' },
+  { name: 'Estadísticas', href: '/admin' },
   { name: 'Usuarios', href: '/admin/users' },
   { name: 'Clases', href: '/admin/classes' },
 ];
@@ -34,9 +34,11 @@ const LogoutButton: FC<{ mobile?: boolean }> = ({ mobile = false }) => {
     <a
       href='/api/auth/logout'
       className={clsxm(
+        'block rounded-md',
+        'px-3 py-2',
         mobile
-          ? 'block rounded-md px-3 py-2 text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white'
-          : 'block px-4 py-2 text-sm text-gray-700'
+          ? 'text-base font-medium text-gray-400 hover:bg-gray-700 hover:text-white'
+          : 'text-sm text-gray-700 hover:bg-gray-100'
       )}
     >
       Cerrar sesión
@@ -44,7 +46,7 @@ const LogoutButton: FC<{ mobile?: boolean }> = ({ mobile = false }) => {
   );
 };
 
-const UserIcon: FC<{ user: User; size: 8 | 10 }> = ({ user, size }) => {
+const UserIcon: FC<{ user: LoginUser; size: 8 | 10 }> = ({ user, size }) => {
   const [first] = user.sn;
   const [last] = user.givenName;
 
@@ -64,7 +66,7 @@ const UserIcon: FC<{ user: User; size: 8 | 10 }> = ({ user, size }) => {
   );
 };
 
-const UserButton: FC<{ user: User }> = ({ user }) => {
+const UserButton: FC<{ user: LoginUser }> = ({ user }) => {
   return (
     <Menu.Button className='flex rounded-full bg-gray-800 text-sm text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800'>
       <span className='sr-only'>Open user menu</span>
@@ -100,7 +102,7 @@ const SearchBar = () => {
   );
 };
 
-const MobileMenu: FC<{ user: User }> = ({ user }) => {
+const MobileMenu: FC<{ user: LoginUser }> = ({ user }) => {
   return (
     <div className='hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center'>
       <button
@@ -154,8 +156,9 @@ const MobileMenu: FC<{ user: User }> = ({ user }) => {
   );
 };
 
-export const Header: FC<{ user: User }> = ({ user }) => {
+export const Header: FC<{ user: LoginUser }> = ({ user }) => {
   const path = useCurrentPath();
+
   let navigation: {
     name: string;
     href: string;
@@ -272,7 +275,7 @@ export const Header: FC<{ user: User }> = ({ user }) => {
               <div className='mt-3 space-y-1 px-2'>
                 {userNavigation.map((item) => {
                   if (item.name === 'Cerrar sesión') {
-                    return <LogoutButton key='Cerrar sesión' />;
+                    return <LogoutButton key='Cerrar sesión' mobile />;
                   }
 
                   return (

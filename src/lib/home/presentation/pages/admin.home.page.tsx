@@ -1,12 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 
-import { User } from '../../../user/domain/user';
+import { Loader } from '../../../common/presentation/components/atoms/loader';
+import { LoginUser } from '../../../user/domain/user';
 import {
   StatisticsApiRepository,
   StatisticsRepository,
 } from '../../application/statistics.repository';
 
-export const AdminHomePage: FC<{ user: User }> = ({ user }) => {
+export const AdminHomePage: FC<{ user: LoginUser }> = ({ user }) => {
   const [statistics, setStatistics] =
     useState<Awaited<ReturnType<StatisticsRepository['getCounts']>>>();
 
@@ -17,7 +18,7 @@ export const AdminHomePage: FC<{ user: User }> = ({ user }) => {
   }, []);
 
   if (!statistics) {
-    return <div>Loading...</div>;
+    return <Loader className='mx-auto' />;
   }
 
   if (!statistics.status) {

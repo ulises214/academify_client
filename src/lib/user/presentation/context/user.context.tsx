@@ -1,10 +1,10 @@
 import { createContext, useContext } from 'react';
 
 import { ApiResult } from '../../../common/infrastructure/fetch.wrapper';
-import { User } from '../../domain/user';
+import { LoginUser } from '../../domain/user';
 
 export interface UserContext {
-  data?: ApiResult<User>;
+  data?: ApiResult<LoginUser>;
 }
 
 export const userContext = createContext<UserContext>({} as UserContext);

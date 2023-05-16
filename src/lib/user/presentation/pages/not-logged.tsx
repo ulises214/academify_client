@@ -16,7 +16,7 @@ export const NotLogged: FC = () => {
         <div className='container flex items-center justify-between text-white'>
           <div>Academify</div>
           <div className='rounded-full bg-white p-1'>
-            <img src={UdcIcon} alt='UDC' className='h-8 w-8' text-white />
+            <img src={UdcIcon} alt='UDC' className='h-8 w-8' />
           </div>
         </div>
         <h1 className='text-4xl font-bold'>No has iniciado tu sesión</h1>

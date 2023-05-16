@@ -12,7 +12,7 @@ export const MainLayout = () => {
       <div>
         <UserChecker>{({ user }) => <Header user={user} />}</UserChecker>
       </div>
-      <div className='container mx-auto grow'>{outlet}</div>
+      <div className='container mx-auto w-full grow py-4'>{outlet}</div>
       <div>
         <Footer />
       </div>
