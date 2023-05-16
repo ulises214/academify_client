@@ -2,6 +2,10 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import {
+  StatisticsApiRepository,
+  StatisticsRepository,
+} from '../../../home/application/statistics.repository';
+import {
   StudentApiRepository,
   StudentRepository,
 } from '../../../student/data/student-repository';
@@ -19,12 +23,14 @@ export type Repo = {
   user: UserRepository;
   student: StudentRepository;
   teacher: TeacherRepository;
+  statistics: StatisticsRepository;
 };
 
 const repos: Repo = {
   user: UserApiRepository,
   student: StudentApiRepository,
   teacher: TeacherApiRepository,
+  statistics: StatisticsApiRepository,
 };
 
 export type FetchData<

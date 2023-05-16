@@ -28,7 +28,7 @@ type Props<R extends keyof Repo, T extends keyof Repo[R]> = {
     refetch: UseFetchReturn<R, T>['refetch'];
     data: FetchData<R, T>;
   }) => JSX.Element;
-  onError: OnError<R, T>;
+  onError?: OnError<R, T>;
   onLoading?: () => JSX.Element;
   allowUndefined?: boolean;
 };
@@ -69,6 +69,10 @@ export const ApiFetcher = <R extends keyof Repo, T extends keyof Repo[R]>({
     );
   }
   if (result.error) {
+    if (!onError) {
+      return <Alert variant='error' message={result.error}></Alert>;
+    }
+
     if (onErrorIsFunction(onError)) {
       return onError({
         error: result.error,
