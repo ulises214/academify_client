@@ -3,11 +3,22 @@ import { FC } from 'react';
 import { CourseWithTeacher } from '../../../../common/domain/models/course';
 import { clsxm } from '../../../../common/presentation/clsxm';
 
-export const StudentCourseCard: FC<{ course: CourseWithTeacher }> = ({
-  course,
-}) => {
+export const StudentCourseCard: FC<{
+  course: CourseWithTeacher;
+  onClick?: VoidFunction;
+}> = ({ course, onClick }) => {
   return (
-    <li>
+    <li
+      onClick={onClick}
+      className={clsxm(
+        onClick && [
+          'cursor-pointer',
+          'hover:shadow-xl',
+          'transition-all',
+          'hover:scale-[1.01]',
+        ]
+      )}
+    >
       <div className='rounded-lg bg-white p-6 shadow-lg'>
         <div className='flex items-start justify-between'>
           <h2 className='mb-4 text-2xl font-bold'>{course.name}</h2>

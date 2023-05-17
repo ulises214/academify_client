@@ -10,6 +10,7 @@ import {
 import { MainLayout } from './lib/common/presentation/layout/main.layout';
 import { AdminHomePage } from './lib/home/presentation/pages/admin.home.page';
 import { HomePage } from './lib/home/presentation/pages/home.page';
+import { StudentCourseDetails } from './lib/student/presentation/pages/courses/[courseId]';
 import { StudentHomePage } from './lib/student/presentation/pages/student.home.page';
 import { TeacherHomePage } from './lib/teacher/presentation/pages/teacher.home.page';
 import { UserRole } from './lib/user/domain/user';
@@ -58,6 +59,7 @@ function App() {
             element={<RoleProtectedRoute role='STUDENT' />}
           >
             <Route index element={<StudentHomePage user={userInfo} />} />
+            <Route path='course/:id' element={<StudentCourseDetails />} />
             <Route path='*' element={<div>Student</div>} />
           </Route>
           <Route

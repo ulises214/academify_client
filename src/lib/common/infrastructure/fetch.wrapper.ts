@@ -20,6 +20,12 @@ export type ParsedRepository<T> = {
     : never;
 };
 
+export type ApiMethodResult<T> = T extends (...args: never[]) => infer R
+  ? R extends ApiResponse<infer D>
+    ? D
+    : never
+  : never;
+
 type Query = Record<string, string>;
 
 type CommonProps = {

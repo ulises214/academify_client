@@ -3,6 +3,7 @@ import { matchRoutes, useLocation } from 'react-router-dom';
 export const Routes = {
   HOME: '/',
   STUDENT_HOME: '/student',
+  STUDENT_COURSE_DETAILS: '/student/course/:id',
   STUDENT_ACTIVITIES: '/student/activities',
   STUDENT_GRADES: '/student/grades',
   TEACHER_HOME: '/teacher',

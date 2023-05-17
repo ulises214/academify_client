@@ -6,19 +6,29 @@ import { Link } from 'react-router-dom';
 
 import { LoginUser } from '../../../user/domain/user';
 import { clsxm } from '../clsxm';
-import { useCurrentPath } from '../hooks/use-current-path';
+import { Routes, useCurrentPath } from '../hooks/use-current-path';
 
-const studentNavigation = [
-  { name: 'Clases', href: '/student' },
+type NavigationItem = {
+  name: string;
+  href: string;
+  matches?: string[];
+};
+
+const studentNavigation: NavigationItem[] = [
+  {
+    name: 'Clases',
+    href: '/student',
+    matches: [Routes.STUDENT_HOME, Routes.STUDENT_COURSE_DETAILS],
+  },
   { name: 'Actividades', href: '/student/activities' },
   { name: 'Calificaciones', href: '/student/grades' },
 ];
-const teacherNavigation = [
+const teacherNavigation: NavigationItem[] = [
   { name: 'Clases', href: '/teacher' },
   { name: 'Actividades', href: '/teacher/activities' },
   { name: 'Calificaciones', href: '/teacher/grades' },
 ];
-const adminNavigation = [
+const adminNavigation: NavigationItem[] = [
   { name: 'Estadísticas', href: '/admin' },
   { name: 'Usuarios', href: '/admin/users' },
   { name: 'Clases', href: '/admin/classes' },
@@ -159,10 +169,7 @@ const MobileMenu: FC<{ user: LoginUser }> = ({ user }) => {
 export const Header: FC<{ user: LoginUser }> = ({ user }) => {
   const path = useCurrentPath();
 
-  let navigation: {
-    name: string;
-    href: string;
-  }[];
+  let navigation: NavigationItem[] = [];
   if (user.role === 'STUDENT') {
     navigation = studentNavigation;
   }
@@ -207,7 +214,8 @@ export const Header: FC<{ user: LoginUser }> = ({ user }) => {
               aria-label='Global'
             >
               {navigation.map((item) => {
-                const current = path === item.href;
+                const current =
+                  path === item.href || (path && item.matches?.includes(path));
 
                 return (
                   <Link
@@ -231,7 +239,8 @@ export const Header: FC<{ user: LoginUser }> = ({ user }) => {
           <Disclosure.Panel as='nav' className='lg:hidden' aria-label='Global'>
             <div className='space-y-1 px-2 pb-3 pt-2'>
               {navigation.map((item) => {
-                const current = path === item.href;
+                const current =
+                  path === item.href || (path && item.matches?.includes(path));
 
                 return (
                   <Disclosure.Button

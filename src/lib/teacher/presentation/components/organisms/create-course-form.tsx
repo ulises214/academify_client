@@ -56,7 +56,7 @@ export const CreateCourseForm: FC<{ reload: VoidFunction }> = ({ reload }) => {
     <>
       <MainButton onClick={() => setShowDialog(true)}>
         <PlusCircleIcon className='-ml-0.5 h-5 w-5' aria-hidden='true' />
-        Button text
+        Agregar curso
       </MainButton>
       <ModalWrapper open={showDialog} onClose={() => setShowDialog(false)}>
         <form
