@@ -20,10 +20,10 @@ type OnError<R extends keyof Repo, T extends keyof Repo[R]> =
       canRefetch?: boolean;
     };
 
-type Props<R extends keyof Repo, T extends keyof Repo[R]> = {
+type PropsRaw<R extends keyof Repo, T extends keyof Repo[R]> = {
   action: T;
   repo: R;
-  args?: FetchActionArgs<R, T>;
+  allowRetry?: boolean;
   children: (arg0: {
     refetch: UseFetchReturn<R, T>['refetch'];
     data: FetchData<R, T>;
@@ -32,6 +32,15 @@ type Props<R extends keyof Repo, T extends keyof Repo[R]> = {
   onLoading?: () => JSX.Element;
   allowUndefined?: boolean;
 };
+
+type Props<R extends keyof Repo, T extends keyof Repo[R]> = PropsRaw<R, T> &
+  (FetchActionArgs<R, T> extends void
+    ? {
+        args?: never;
+      }
+    : {
+        args: FetchActionArgs<R, T>;
+      });
 
 const onErrorIsFunction = <R extends keyof Repo, T extends keyof Repo[R]>(
   onError: OnError<R, T>
@@ -44,6 +53,7 @@ export const ApiFetcher = <R extends keyof Repo, T extends keyof Repo[R]>({
   action,
   allowUndefined,
   args,
+  allowRetry,
   children,
   onError,
   repo,
@@ -70,7 +80,13 @@ export const ApiFetcher = <R extends keyof Repo, T extends keyof Repo[R]>({
   }
   if (result.error) {
     if (!onError) {
-      return <Alert variant='error' message={result.error}></Alert>;
+      return (
+        <Alert
+          onReload={allowRetry ? refetch : undefined}
+          variant='error'
+          message={result.error}
+        ></Alert>
+      );
     }
 
     if (onErrorIsFunction(onError)) {

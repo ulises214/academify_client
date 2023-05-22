@@ -11,7 +11,6 @@ export default defineConfig({
       hook: 'buildEnd',
     }),
   ],
-  base: '/client',
   server: {
     proxy: {
       '/api': {

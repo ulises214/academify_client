@@ -7,6 +7,10 @@ export const Routes = {
   STUDENT_ACTIVITIES: '/student/activities',
   STUDENT_GRADES: '/student/grades',
   TEACHER_HOME: '/teacher',
+  TEACHER_COURSE_DETAILS: '/teacher/course/:id',
+  TEACHER_HOMEWORK_DETAILS: '/teacher/course/:courseId/homework/:homeworkId',
+  TEACHER_HOMEWORK_ASSESSMENTS:
+    '/teacher/course/:courseId/homework/:homeworkId/assignments',
   TEACHER_ACTIVITIES: '/teacher/activities',
   TEACHER_GRADES: '/teacher/grades',
   ADMIN_HOME: '/admin',

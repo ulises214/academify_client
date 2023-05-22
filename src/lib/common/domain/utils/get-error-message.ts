@@ -7,6 +7,8 @@ const Errors: Record<string, string | undefined> = {
   'Student not subscribed to course': 'No estás inscrito en el curso',
   'Homework not assigned': 'La tarea no está asignada',
   'Assignment already delivered': 'La tarea ya fue entregada',
+  'Homework not found': 'La tarea no existe',
+  'Request failed with status code 500': 'Error interno del servidor',
   Unauthorized: 'No autorizado',
 };
 

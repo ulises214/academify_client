@@ -24,9 +24,21 @@ const studentNavigation: NavigationItem[] = [
   { name: 'Calificaciones', href: '/student/grades' },
 ];
 const teacherNavigation: NavigationItem[] = [
-  { name: 'Clases', href: '/teacher' },
-  { name: 'Actividades', href: '/teacher/activities' },
-  { name: 'Calificaciones', href: '/teacher/grades' },
+  {
+    name: 'Clases',
+    href: '/teacher',
+    matches: [Routes.TEACHER_HOME, Routes.TEACHER_COURSE_DETAILS],
+  },
+  {
+    name: 'Actividades',
+    href: '/teacher/activities',
+    matches: [Routes.TEACHER_HOMEWORK_DETAILS],
+  },
+  {
+    name: 'Calificaciones',
+    href: '/teacher/grades',
+    matches: [Routes.TEACHER_HOMEWORK_ASSESSMENTS],
+  },
 ];
 const adminNavigation: NavigationItem[] = [
   { name: 'Estadísticas', href: '/admin' },

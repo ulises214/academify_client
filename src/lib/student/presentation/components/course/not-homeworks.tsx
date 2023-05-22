@@ -1,4 +1,8 @@
-export const CourseHasNotHomework = () => {
+import { FC } from 'react';
+
+export const CourseHasNotHomework: FC<{
+  isTeacher?: boolean;
+}> = ({ isTeacher }) => {
   return (
     <div className='text-center'>
       <svg
@@ -20,7 +24,9 @@ export const CourseHasNotHomework = () => {
         Este curso no tiene tareas
       </h3>
       <p className='mt-1 text-sm text-gray-500'>
-        Espera a que el profesor agregue tareas
+        {isTeacher
+          ? 'Puedes crear una tarea en la sección de tareas'
+          : 'Espera a que el profesor agregue tareas'}
       </p>
     </div>
   );

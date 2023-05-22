@@ -12,7 +12,10 @@ import { AdminHomePage } from './lib/home/presentation/pages/admin.home.page';
 import { HomePage } from './lib/home/presentation/pages/home.page';
 import { StudentCourseDetails } from './lib/student/presentation/pages/courses/[courseId]';
 import { StudentHomePage } from './lib/student/presentation/pages/student.home.page';
+import { TeacherCourseDetails } from './lib/teacher/presentation/pages/teacher.course.details';
+import { TeacherCourseHomeworkDetails } from './lib/teacher/presentation/pages/teacher.course.homework.details';
 import { TeacherHomePage } from './lib/teacher/presentation/pages/teacher.home.page';
+import { TeacherHomeworkAssignments } from './lib/teacher/presentation/pages/teacher.homework.assignments';
 import { UserRole } from './lib/user/domain/user';
 import { useUser } from './lib/user/presentation/context/user.context';
 import { LoadingUser } from './lib/user/presentation/pages/loading-user';
@@ -50,7 +53,7 @@ function App() {
   const userInfo = user.data.payload;
 
   return (
-    <BrowserRouter basename='client'>
+    <BrowserRouter>
       <Routes>
         <Route element={<MainLayout />}>
           <Route path='/' element={<HomePage />} />
@@ -67,6 +70,17 @@ function App() {
             element={<RoleProtectedRoute role='TEACHER' />}
           >
             <Route index element={<TeacherHomePage user={userInfo} />} />
+            <Route path='course/:id'>
+              <Route index element={<TeacherCourseDetails />} />
+              <Route path='homework/:homeworkId'>
+                <Route index element={<TeacherCourseHomeworkDetails />} />
+                <Route
+                  path='assignments'
+                  element={<TeacherHomeworkAssignments />}
+                />
+                <Route path='*' element={<div>Homework</div>} />
+              </Route>
+            </Route>
             <Route path='*' element={<div>Teacher</div>} />
           </Route>
           <Route path='/admin' element={<RoleProtectedRoute role='ADMIN' />}>

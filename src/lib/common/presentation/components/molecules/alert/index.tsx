@@ -56,7 +56,7 @@ export const Alert: FC<Props> = ({
 
   return (
     <div
-      onClick={onClick}
+      onClick={() => onClick?.()}
       className={clsxm(
         '!transition-colors',
         //#region variant
