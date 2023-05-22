@@ -5,6 +5,7 @@ export const Routes = {
   STUDENT_HOME: '/student',
   STUDENT_COURSE_DETAILS: '/student/course/:id',
   STUDENT_ACTIVITIES: '/student/activities',
+  STUDENT_HOMEWORK_DETAILS: '/student/course/:courseId/homework/:homeworkId',
   STUDENT_GRADES: '/student/grades',
   TEACHER_HOME: '/teacher',
   TEACHER_COURSE_DETAILS: '/teacher/course/:id',

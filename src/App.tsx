@@ -12,6 +12,7 @@ import { AdminHomePage } from './lib/home/presentation/pages/admin.home.page';
 import { HomePage } from './lib/home/presentation/pages/home.page';
 import { StudentCourseDetails } from './lib/student/presentation/pages/courses/[courseId]';
 import { StudentHomePage } from './lib/student/presentation/pages/student.home.page';
+import { StudentHomeworkDetails } from './lib/student/presentation/pages/student.homework.details';
 import { TeacherCourseDetails } from './lib/teacher/presentation/pages/teacher.course.details';
 import { TeacherCourseHomeworkDetails } from './lib/teacher/presentation/pages/teacher.course.homework.details';
 import { TeacherHomePage } from './lib/teacher/presentation/pages/teacher.home.page';
@@ -62,7 +63,13 @@ function App() {
             element={<RoleProtectedRoute role='STUDENT' />}
           >
             <Route index element={<StudentHomePage user={userInfo} />} />
-            <Route path='course/:id' element={<StudentCourseDetails />} />
+            <Route path='course/:id'>
+              <Route index element={<StudentCourseDetails />} />
+              <Route path='homework/:homeworkId'>
+                <Route index element={<StudentHomeworkDetails />} />
+              </Route>
+            </Route>
+
             <Route path='*' element={<div>Student</div>} />
           </Route>
           <Route

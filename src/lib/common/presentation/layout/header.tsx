@@ -20,7 +20,11 @@ const studentNavigation: NavigationItem[] = [
     href: '/student',
     matches: [Routes.STUDENT_HOME, Routes.STUDENT_COURSE_DETAILS],
   },
-  { name: 'Actividades', href: '/student/activities' },
+  {
+    name: 'Actividades',
+    href: '/student/activities',
+    matches: [Routes.STUDENT_HOMEWORK_DETAILS],
+  },
   { name: 'Calificaciones', href: '/student/grades' },
 ];
 const teacherNavigation: NavigationItem[] = [

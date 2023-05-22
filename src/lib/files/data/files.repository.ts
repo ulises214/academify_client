@@ -12,6 +12,7 @@ export type FilesRepository = ParsedRepository<{
     homeworkId: string;
     courseId: string;
   }): AppFile;
+  addAssignmentFile(arg0: { file: File; homeworkId: string }): AppFile;
 }>;
 
 export const FilesApiRepository: FilesRepository = {
@@ -20,6 +21,14 @@ export const FilesApiRepository: FilesRepository = {
     formData.append('file', file);
 
     return fetch.post(`homeworks/${courseId}/${homeworkId}/file`, {
+      body: formData,
+    });
+  },
+  addAssignmentFile: ({ file, homeworkId }) => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    return fetch.post(`assignments/${homeworkId}/file`, {
       body: formData,
     });
   },
