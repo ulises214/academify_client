@@ -38,13 +38,9 @@ type PostProps = CommonProps & {
   body?: Record<string, unknown> | FormData;
 };
 
-export const buildFetcher = ({
-  baseUrl,
-  withApi = true,
-}: {
-  baseUrl: string;
-  withApi?: boolean;
-}): {
+export const buildFetcher = (
+  baseUrl: string
+): {
   get: <T>(path: string, props?: GetProps) => ApiResponse<T>;
   post: <T>(path: string, props?: PostProps) => ApiResponse<T>;
   put: <T>(path: string, props?: PostProps) => ApiResponse<T>;
@@ -54,7 +50,7 @@ export const buildFetcher = ({
     const includeSlash = path.startsWith('/');
     const parsedPath = includeSlash ? path.slice(1) : path;
     const realPath = `${baseUrl}/${parsedPath}`;
-    let url = withApi ? `/api/${realPath}` : `/${realPath}`;
+    let url = `/api/${realPath}`;
     if (query) {
       const params = new URLSearchParams();
       Object.entries(query).forEach(([key, value]) => {
