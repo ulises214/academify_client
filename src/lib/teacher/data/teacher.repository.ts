@@ -6,6 +6,7 @@ import {
   buildFetcher,
   ParsedRepository,
 } from '../../common/infrastructure/fetch.wrapper';
+import { User } from '../../user/domain/user';
 
 const fetch = buildFetcher({ baseUrl: 'teachers' });
 
@@ -29,6 +30,12 @@ export type TeacherRepository = ParsedRepository<{
     asignments: Assignment[];
     files: AppFile[];
   };
+  getHomeWorkAssignments(homeworkId: string): HomeWork & {
+    assignments: (Assignment & {
+      files: AppFile[];
+      user?: User;
+    })[];
+  };
   activateHomeWork(homeworkId: string): true;
 }>;
 
@@ -38,6 +45,8 @@ export const TeacherApiRepository: TeacherRepository = {
   getCourseHomeWorks: (courseId) => fetch.get(`homeworks/course/${courseId}`),
   createHomeWork: (body) => fetch.post('homeworks', { body }),
   getHomeWorkDetails: (homeworkId) => fetch.get(`homeworks/${homeworkId}`),
+  getHomeWorkAssignments: (homeworkId) =>
+    fetch.get(`homeworks/${homeworkId}/assignments`),
   activateHomeWork: (homeworkId) =>
     fetch.post(`homeworks/${homeworkId}/activate`),
 };

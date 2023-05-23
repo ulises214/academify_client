@@ -10,6 +10,8 @@ export type HomeWorkAsignmentStatus = keyof typeof HomeWorkAsignmentStatus;
 
 export type Assignment = BaseModel & {
   status: HomeWorkAsignmentStatus;
+  rating?: number;
+  deliveredAt?: string;
 
   homeWorkId: string;
 
