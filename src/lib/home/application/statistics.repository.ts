@@ -3,7 +3,7 @@ import {
   ParsedRepository,
 } from '../../common/infrastructure/fetch.wrapper';
 
-const fetch = buildFetcher({ baseUrl: 'statistics' });
+const fetch = buildFetcher('statistics');
 
 export type StatisticsRepository = ParsedRepository<{
   getCounts(): {

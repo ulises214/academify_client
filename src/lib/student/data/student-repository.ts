@@ -7,7 +7,7 @@ import {
   ParsedRepository,
 } from '../../common/infrastructure/fetch.wrapper';
 
-const fetch = buildFetcher({ baseUrl: 'students' });
+const fetch = buildFetcher('students');
 
 export type StudentRepository = ParsedRepository<{
   getCourses(): CourseWithTeacher[];

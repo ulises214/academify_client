@@ -37,13 +37,6 @@ export const AssignmentDetails: FC<{
         <h3 className='text-sm'>{assignment.user?.name}</h3>
         <p className='text-sm'>{assignment.user?.email}</p>
       </div>
-      <div className='space-y-2'>
-        <h3 className='text-sm'>Archivos</h3>
-        <ul className='space-y-2'>
-          {assignment.files.map((file) => {
-            return (
-              <li key={file.id}>
-                
     </div>
   );
 };

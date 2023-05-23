@@ -4,7 +4,7 @@ import {
   ParsedRepository,
 } from '../../common/infrastructure/fetch.wrapper';
 
-const fetch = buildFetcher({ baseUrl: 'files' });
+const fetch = buildFetcher('files');
 
 export type FilesRepository = ParsedRepository<{
   addFileToHomeWork(arg0: {

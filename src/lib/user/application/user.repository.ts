@@ -4,7 +4,7 @@ import {
 } from '../../common/infrastructure/fetch.wrapper';
 import { LoginUser } from '../domain/user';
 
-const fetch = buildFetcher({ baseUrl: 'users' });
+const fetch = buildFetcher('users');
 
 export type UserRepository = ParsedRepository<{
   getProfile(): LoginUser;
