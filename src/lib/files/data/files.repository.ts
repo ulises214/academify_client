@@ -13,6 +13,9 @@ export type FilesRepository = ParsedRepository<{
     courseId: string;
   }): AppFile;
   addAssignmentFile(arg0: { file: File; homeworkId: string }): AppFile;
+  downloadFile(fileId: string): AppFile & {
+    data: string;
+  };
 }>;
 
 export const FilesApiRepository: FilesRepository = {
@@ -32,4 +35,5 @@ export const FilesApiRepository: FilesRepository = {
       body: formData,
     });
   },
-};
+  downloadFile: (fileId) => fetch.get(`${fileId}`),
+} as const;

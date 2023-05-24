@@ -37,6 +37,7 @@ export type TeacherRepository = ParsedRepository<{
     })[];
   };
   activateHomeWork(homeworkId: string): true;
+  rateAssignment(arg0: { assignmentId: string; rate: number }): Assignment;
 }>;
 
 export const TeacherApiRepository: TeacherRepository = {
@@ -49,4 +50,6 @@ export const TeacherApiRepository: TeacherRepository = {
     fetch.get(`homeworks/${homeworkId}/assignments`),
   activateHomeWork: (homeworkId) =>
     fetch.post(`homeworks/${homeworkId}/activate`),
+  rateAssignment: ({ assignmentId, rate }) =>
+    fetch.post(`homeworks/rate/${assignmentId}`, { body: { rate } }),
 };

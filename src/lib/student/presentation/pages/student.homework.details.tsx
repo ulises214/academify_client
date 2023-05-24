@@ -3,12 +3,12 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { getAssignmentStatusLabel } from '../../../common/domain/utils/assignment-labels';
-import { getMimeTypeLabel } from '../../../common/domain/utils/get.mimetype.label';
 import { clsxm } from '../../../common/presentation/clsxm';
 import { MainButton } from '../../../common/presentation/components/atoms/button/main-button';
 import { Loader } from '../../../common/presentation/components/atoms/loader';
 import { Alert } from '../../../common/presentation/components/molecules/alert';
 import { ApiFetcher } from '../../../common/presentation/components/molecules/api-fetcher';
+import { AppFileViewer } from '../../../common/presentation/components/molecules/file/app.file.viewer';
 import { InputWithLabel } from '../../../common/presentation/components/molecules/input/input-with-label';
 import { ModalWrapper } from '../../../common/presentation/components/molecules/modals/modal-wrapper';
 import { useFetch } from '../../../common/presentation/hooks/api-fetch';
@@ -68,15 +68,11 @@ export const StudentHomeworkDetails = () => {
                   <h2 className='text-xl font-bold'>Archivos adjuntos</h2>
                   <ul className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
                     {data.files.map((file) => (
-                      <li
+                      <AppFileViewer
+                        file={file}
+                        type='homework'
                         key={file.id}
-                        className='flex flex-col border border-slate-200'
-                      >
-                        <span className='text-lg font-bold'>{file.name}</span>
-                        <span className='text-gray-500'>
-                          {getMimeTypeLabel(file.type)}
-                        </span>
-                      </li>
+                      />
                     ))}
                   </ul>
                 </div>
@@ -84,21 +80,24 @@ export const StudentHomeworkDetails = () => {
               <div className='flex-1 space-y-4'>
                 <div className='flex justify-between'>
                   <h2 className='text-xl font-bold'>Tu asignación</h2>
-                  {getAssignmentStatusLabel(data.asignment.status)}
+                  <div className='flex flex-col items-end gap-2'>
+                    {getAssignmentStatusLabel(data.asignment.status)}
+                    {data.asignment.rating && (
+                      <span className='text-sm'>
+                        Tu calificación: {data.asignment.rating}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <h2 className='text-xl font-bold'>Archivos adjuntos</h2>
-                  <ul className='mt-4 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))]'>
+                  <ul className='mt-4 grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
                     {data.asignment.files.map((file) => (
-                      <li
+                      <AppFileViewer
+                        file={file}
+                        type='homework'
                         key={file.id}
-                        className='flex flex-col border border-slate-200'
-                      >
-                        <span className='text-lg font-bold'>{file.name}</span>
-                        <span className='text-gray-500'>
-                          {getMimeTypeLabel(file.type)}
-                        </span>
-                      </li>
+                      />
                     ))}
                   </ul>
                 </div>
@@ -128,7 +127,10 @@ const SetAsDelivered: FC<{
 
   return (
     <div className='flex justify-center'>
-      <MainButton onClick={() => setIsOpen(true)}>
+      <MainButton
+        onClick={() => setIsOpen(true)}
+        className='w-full justify-center'
+      >
         Marcar como entregada
       </MainButton>
       <ModalWrapper open={isOpen} onClose={() => setIsOpen(false)}>
@@ -185,8 +187,13 @@ const AddFile: FC<{
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className='flex justify-center'>
-      <MainButton onClick={() => setIsOpen(true)}>Agregar archivo</MainButton>
+    <div className='flex w-full justify-center'>
+      <MainButton
+        onClick={() => setIsOpen(true)}
+        className='flex w-full justify-center'
+      >
+        Agregar archivo
+      </MainButton>
       <ModalWrapper open={isOpen} onClose={() => setIsOpen(false)}>
         <AddFileContent
           homeworkId={homeworkId}

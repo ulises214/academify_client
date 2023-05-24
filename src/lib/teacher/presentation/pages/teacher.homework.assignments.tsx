@@ -32,7 +32,7 @@ export const TeacherHomeworkAssignments = () => {
     >
       {({ data, refetch }) => {
         return (
-          <section className='space-y-8'>
+          <>
             <AssignmentDetailsModal
               onReload={refetch}
               onClose={() => {
@@ -40,53 +40,56 @@ export const TeacherHomeworkAssignments = () => {
               }}
               assignment={currentAssignment}
             />
-            <div className='flex justify-between'>
-              <h1 className='text-2xl font-bold'>{data.name}</h1>
-              <MainButton onClick={refetch}>Recargar</MainButton>
-            </div>
-            <div className='space-y-4'>
-              <h2 className='text-xl font-bold'>Asignaciones</h2>
-              <ul className='space-y-4'>
-                {data.assignments.map((assignment) => {
-                  const { user } = assignment;
+            <section className='space-y-8'>
+              <div className='flex justify-between'>
+                <h1 className='text-2xl font-bold'>{data.name}</h1>
+                <MainButton onClick={refetch}>Recargar</MainButton>
+              </div>
+              <div className='space-y-4'>
+                <h2 className='text-xl font-bold'>Asignaciones</h2>
+                <ul className='space-y-4'>
+                  {data.assignments.map((assignment) => {
+                    const { user } = assignment;
 
-                  return (
-                    <li key={assignment.id} className='space-y-2'>
-                      <div className='flex justify-between'>
-                        <div>
-                          <h3 className='text-lg font-bold'>{user?.name}</h3>
-                          <p className='text-gray-500'>{user?.email}</p>
-                          <span
-                            className={clsxm(
-                              'py-1 px-2 rounded-full text-white',
-                              assignment.status === 'UNDELIVERED' &&
-                                'bg-slate-500',
-                              assignment.status === 'DELIVERED' &&
-                                'bg-green-500',
-                              assignment.status === 'DELIVERED_LATE' &&
-                                'bg-amber-500',
-                              assignment.status === 'EVALUATED' && 'bg-sky-500'
-                            )}
-                          >
-                            {getAssignmentStatusLabel(assignment.status)}
-                          </span>
+                    return (
+                      <li key={assignment.id} className='space-y-2'>
+                        <div className='flex justify-between'>
+                          <div>
+                            <h3 className='text-lg font-bold'>{user?.name}</h3>
+                            <p className='text-gray-500'>{user?.email}</p>
+                            <span
+                              className={clsxm(
+                                'py-1 px-2 rounded-full text-white',
+                                assignment.status === 'UNDELIVERED' &&
+                                  'bg-slate-500',
+                                assignment.status === 'DELIVERED' &&
+                                  'bg-green-500',
+                                assignment.status === 'DELIVERED_LATE' &&
+                                  'bg-amber-500',
+                                assignment.status === 'EVALUATED' &&
+                                  'bg-sky-500'
+                              )}
+                            >
+                              {getAssignmentStatusLabel(assignment.status)}
+                            </span>
+                          </div>
+                          <div>
+                            <MainButton
+                              onClick={() => {
+                                setCurrentAssignment(assignment);
+                              }}
+                            >
+                              Ver
+                            </MainButton>
+                          </div>
                         </div>
-                        <div>
-                          <MainButton
-                            onClick={() => {
-                              setCurrentAssignment(assignment);
-                            }}
-                          >
-                            Ver
-                          </MainButton>
-                        </div>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-          </section>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </section>
+          </>
         );
       }}
     </ApiFetcher>

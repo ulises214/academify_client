@@ -7,10 +7,10 @@ import {
   HomeWorkAsignmentStatus,
 } from '../../../common/domain/models/assignment';
 import { getAssignmentStatusLabel } from '../../../common/domain/utils/assignment-labels';
-import { getMimeTypeLabel } from '../../../common/domain/utils/get.mimetype.label';
 import { MainButton } from '../../../common/presentation/components/atoms/button/main-button';
 import { Alert } from '../../../common/presentation/components/molecules/alert';
 import { ApiFetcher } from '../../../common/presentation/components/molecules/api-fetcher';
+import { AppFileViewer } from '../../../common/presentation/components/molecules/file/app.file.viewer';
 import { useFetch } from '../../../common/presentation/hooks/api-fetch';
 import { Routes } from '../../../common/presentation/hooks/use-current-path';
 import { AddHomeworkFile } from '../components/organisms/add.homework.file';
@@ -74,15 +74,7 @@ export const TeacherCourseHomeworkDetails = () => {
               </div>
               <ul className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
                 {data.files.map((file) => (
-                  <li
-                    key={file.id}
-                    className='flex flex-col border border-slate-200'
-                  >
-                    <span className='text-lg font-bold'>{file.name}</span>
-                    <span className='text-gray-500'>
-                      {getMimeTypeLabel(file.type)}
-                    </span>
-                  </li>
+                  <AppFileViewer key={file.id} file={file} type='homework' />
                 ))}
               </ul>
             </div>

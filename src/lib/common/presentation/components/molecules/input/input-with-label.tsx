@@ -9,7 +9,7 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & {
 export const InputWithLabel = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, errorMessage, ...inputProps }, ref) => {
     return (
-      <div className='mb-4'>
+      <div>
         {label && (
           <label className='mb-2 block text-sm font-bold text-gray-700'>
             {label}

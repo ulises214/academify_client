@@ -19,6 +19,7 @@ export const TeacherCoursesList: FC<{ courses: Course[] }> = ({ courses }) => {
       {courses.map((course) => {
         return (
           <StudentCourseCard
+            key={course.id}
             onClick={() =>
               navigate(Routes.TEACHER_COURSE_DETAILS.replace(':id', course.id))
             }
