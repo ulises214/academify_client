@@ -6,6 +6,7 @@ type Props = {
   onClick?: () => void;
   className?: string;
   type?: 'button' | 'submit' | 'reset';
+  variant?: 'primary' | 'danger';
   isLoading?: boolean;
 };
 export const MainButton: FC<PropsWithChildren<Props>> = ({
@@ -14,6 +15,7 @@ export const MainButton: FC<PropsWithChildren<Props>> = ({
   children,
   type,
   isLoading,
+  variant = 'primary',
 }) => {
   return (
     <button
@@ -21,13 +23,20 @@ export const MainButton: FC<PropsWithChildren<Props>> = ({
       onClick={() => onClick?.()}
       disabled={isLoading}
       className={clsxm(
-        'inline-flex relative items-center gap-x-1.5 rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm',
-        className,
+        'inline-flex relative items-center gap-x-1.5 rounded-md  px-3 py-2 text-sm font-semibold text-white shadow-sm',
+        {
+          'bg-indigo-600': variant === 'primary',
+          'bg-red-600': variant === 'danger',
+        },
         isLoading && ['cursor-not-allowed', 'opacity-50'],
         !isLoading &&
-          onClick && [
-            'hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600',
-          ]
+          onClick && {
+            'hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600':
+              variant === 'primary',
+            'hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600':
+              variant === 'danger',
+            className,
+          }
       )}
     >
       {children}

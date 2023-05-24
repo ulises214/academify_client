@@ -44,6 +44,7 @@ export type TeacherRepository = ParsedRepository<{
     description: string;
     status: 'ACTIVE' | 'INACTIVE';
   }): Course;
+  deleteCourse(courseId: string): Course;
 }>;
 
 export const TeacherApiRepository: TeacherRepository = {
@@ -60,4 +61,5 @@ export const TeacherApiRepository: TeacherRepository = {
     fetch.post(`homeworks/rate/${assignmentId}`, { body: { rate } }),
   updateCourse: ({ courseId, ...body }) =>
     fetch.put(`courses/${courseId}`, { body }),
+  deleteCourse: (courseId) => fetch.delete(`courses/${courseId}`),
 };

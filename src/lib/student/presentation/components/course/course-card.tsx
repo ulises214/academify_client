@@ -209,5 +209,45 @@ const DeleteCourseModal: FC<{
   onClose: VoidFunction;
   onUpdate: VoidFunction;
 }> = ({ course, isOpen, onClose, onUpdate }) => {
-  return <ModalWrapper open={isOpen} onClose={onClose}></ModalWrapper>;
+  const { refetch, result } = useFetch({
+    repo: 'teacher',
+    action: 'deleteCourse',
+    args: course.id,
+  });
+
+  useEffect(() => {
+    if (result.data) {
+      onUpdate();
+    }
+  }, [onUpdate, result]);
+
+  return (
+    <ModalWrapper open={isOpen} onClose={onClose}>
+      <form className='space-y-4'>
+        {result.error && <Alert variant='error' message={result.error}></Alert>}
+        <h3 className='text-2xl font-bold'>Eliminar curso</h3>
+        <p className='text-gray-600'>
+          ¿Estás seguro que deseas eliminar el curso{' '}
+          <span className='font-bold'>{course.name}</span>?
+        </p>
+        <div className='flex justify-end gap-4'>
+          <MainButton
+            isLoading={result.loading}
+            type='button'
+            onClick={onClose}
+          >
+            Cancelar
+          </MainButton>
+          <MainButton
+            onClick={refetch}
+            isLoading={result.loading}
+            type='button'
+            variant='danger'
+          >
+            Eliminar
+          </MainButton>
+        </div>
+      </form>
+    </ModalWrapper>
+  );
 };
