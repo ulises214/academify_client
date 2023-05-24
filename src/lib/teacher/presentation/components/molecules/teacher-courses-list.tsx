@@ -6,7 +6,10 @@ import { clsxm } from '../../../../common/presentation/clsxm';
 import { Routes } from '../../../../common/presentation/hooks/use-current-path';
 import { StudentCourseCard } from '../../../../student/presentation/components/course/course-card';
 
-export const TeacherCoursesList: FC<{ courses: Course[] }> = ({ courses }) => {
+export const TeacherCoursesList: FC<{
+  courses: Course[];
+  refetch: VoidFunction;
+}> = ({ courses, refetch }) => {
   const navigate = useNavigate();
 
   return (
@@ -19,6 +22,8 @@ export const TeacherCoursesList: FC<{ courses: Course[] }> = ({ courses }) => {
       {courses.map((course) => {
         return (
           <StudentCourseCard
+            onUpdated={refetch}
+            isForTeacher
             key={course.id}
             onClick={() =>
               navigate(Routes.TEACHER_COURSE_DETAILS.replace(':id', course.id))

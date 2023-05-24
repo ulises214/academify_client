@@ -53,7 +53,7 @@ export const ApiFetcher = <R extends keyof Repo, T extends keyof Repo[R]>({
   action,
   allowUndefined,
   args,
-  allowRetry,
+  allowRetry = true,
   children,
   onError,
   repo,

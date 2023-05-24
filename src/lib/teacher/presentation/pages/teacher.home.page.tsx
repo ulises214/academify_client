@@ -10,14 +10,16 @@ export const TeacherHomePage: FC<{ user: LoginUser }> = ({ user }) => {
   return (
     <div className='space-y-4'>
       {user.displayName}
-      <ApiFetcher repo='teacher' action='getCourses'>
+      <ApiFetcher allowRetry repo='teacher' action='getCourses'>
         {({ data, refetch }) => {
           return (
             <div className='space-y-4'>
               <div className='flex justify-end'>
                 <CreateCourseForm reload={refetch} />
               </div>
-              {!!data.length && <TeacherCoursesList courses={data} />}
+              {!!data.length && (
+                <TeacherCoursesList refetch={refetch} courses={data} />
+              )}
               {!data.length && <NotOwnsCourses />}
             </div>
           );

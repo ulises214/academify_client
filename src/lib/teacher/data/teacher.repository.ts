@@ -38,6 +38,12 @@ export type TeacherRepository = ParsedRepository<{
   };
   activateHomeWork(homeworkId: string): true;
   rateAssignment(arg0: { assignmentId: string; rate: number }): Assignment;
+  updateCourse(arg0: {
+    courseId: string;
+    name: string;
+    description: string;
+    status: 'ACTIVE' | 'INACTIVE';
+  }): Course;
 }>;
 
 export const TeacherApiRepository: TeacherRepository = {
@@ -52,4 +58,6 @@ export const TeacherApiRepository: TeacherRepository = {
     fetch.post(`homeworks/${homeworkId}/activate`),
   rateAssignment: ({ assignmentId, rate }) =>
     fetch.post(`homeworks/rate/${assignmentId}`, { body: { rate } }),
+  updateCourse: ({ courseId, ...body }) =>
+    fetch.put(`courses/${courseId}`, { body }),
 };
